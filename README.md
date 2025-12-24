@@ -1,15 +1,15 @@
-# Sprint_5 — UI автотесты (Сервис «Доска»)
+# Sprint_5 — UI автотесты для сервиса «Доска»
 
-URL: https://qa-desk.stand.praktikum-services.ru/
+UI-автотесты на Python + pytest + Selenium для:
+https://qa-desk.stand.praktikum-services.ru/
 
-## Покрытие
-- Регистрация (успех, невалидный email, уже существующий пользователь)
-- Login
-- Logout
-- Создание объявления (неавторизованный / авторизованный)
-
-## Запуск
-Из корня проекта:
-```bash
+## Установка
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
+
+## Настройка данных
+Открой data.py и укажи логин/пароль заранее созданного пользователя.
+
+## Запуск тестов
 pytest -v

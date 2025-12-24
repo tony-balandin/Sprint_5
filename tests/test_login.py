@@ -1,19 +1,13 @@
-from selenium.webdriver.support import expected_conditions as EC
-
-from locators.main_locators import MainLocators
-from tests.helpers import register_user, login_user
+from helpers import open_main, login
+from waits import wait_visible
+from locators.main_page import MainPageLocators
+from data import EXISTING_USER_EMAIL, EXISTING_USER_PASSWORD
 
 
 class TestLogin:
-    def test_login_success(self, driver, wait, base_url, unique_email, valid_password):
-        # создаём пользователя
-        register_user(driver, wait, base_url, unique_email, valid_password)
+    def test_login_success(self, driver):
+        open_main(driver)
+        login(driver, EXISTING_USER_EMAIL, EXISTING_USER_PASSWORD)
 
-        # гарантированно выходим
-        wait.until(EC.element_to_be_clickable(MainLocators.LOGOUT_BTN)).click()
-        wait.until(EC.visibility_of_element_located(MainLocators.AUTH_BTN))
-
-        # логинимся теми же данными
-        login_user(driver, wait, base_url, unique_email, valid_password)
-
-        assert driver.find_element(*MainLocators.LOGOUT_BTN).is_displayed()
+        text = wait_visible(driver, MainPageLocators.PROFILE_OPEN).text
+        assert ('Пользователь' in text) or ('User' in text)
