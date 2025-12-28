@@ -38,7 +38,7 @@ class AuthPopupLocators:
 
     CREATE_ACCOUNT = (
         By.XPATH,
-        "//button[contains(normalize-space(.), 'Создать аккаунт') or contains(normalize-space(.), 'речная') or contains(normalize-space(.), 'Create')]",
+        "//button[contains(normalize-space(.), 'Создать аккаунт') or contains(normalize-space(.), 'Create')]",
     )
 
     ALREADY_HAVE_ACCOUNT = (

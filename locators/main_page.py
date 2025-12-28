@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
-    # "Вход и регистрация" / "Войти" / "Регистрация"
+
     AUTH_BTN = (
         By.XPATH,
         "//*[self::a or self::button]"
@@ -12,7 +12,7 @@ class MainPageLocators:
         "or contains(normalize-space(.), 'Register')]"
     )
 
-    # "Разместить объявление"
+
     CREATE_AD_BTN = (
         By.XPATH,
         "//*[self::a or self::button]"
@@ -21,8 +21,18 @@ class MainPageLocators:
         "or contains(normalize-space(.), 'Publish')]"
     )
 
-    # Профиль
-    PROFILE_OPEN = (By.CSS_SELECTOR, "h3.profileText.name")
+
+    PROFILE_OPEN = (
+        By.XPATH,
+        "(//h3[contains(normalize-space(.), 'User') or contains(normalize-space(.), 'Пользователь')]/ancestor::div[1]/preceding-sibling::button"
+        " | //h3[contains(normalize-space(.), 'User') or contains(normalize-space(.), 'Пользователь')]/ancestor::div[1]/following-sibling::button)[1]"
+    )
+
+
+    USERNAME = (
+        By.XPATH,
+        "//h3[contains(normalize-space(.), 'User') or contains(normalize-space(.), 'Пользователь')]"
+    )
 
     LOGOUT_BTN = (
         By.XPATH,

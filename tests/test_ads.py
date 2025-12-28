@@ -1,7 +1,15 @@
-from helpers import open_main, login, open_create_ad, fill_ad_form, open_profile
-from waits import wait_visible
+from helpers import (
+    open_main,
+    login,
+    open_create_ad,
+    fill_ad_form,
+    open_profile,
+    scroll_to,
+    find_my_ad_in_my_ads,
+)
 from locators.ad_form import AdFormLocators
 from locators.profile_page import ProfilePageLocators
+from waits import wait_visible, wait_clickable
 from data import EXISTING_USER_EMAIL, EXISTING_USER_PASSWORD
 
 
@@ -32,10 +40,11 @@ class TestAds:
         )
 
         open_profile(driver)
-        print("H1 count:", len(driver.find_elements("xpath", "//h1")), flush=True)
-        print("TITLE:", driver.title, flush=True)
-        wait_visible(driver, ProfilePageLocators.PROFILE_TITLE)
-        wait_visible(driver, ProfilePageLocators.FAVORITES_TITLE)
 
-        found = wait_visible(driver, ProfilePageLocators.ad_title(ad_title)).text
-        assert found == ad_title
+
+        driver.execute_script("window.scrollTo(0, 0);")
+        wait_visible(driver, ProfilePageLocators.MY_ADS_TITLE)
+        scroll_to(driver, ProfilePageLocators.MY_ADS_TITLE)
+
+
+        assert find_my_ad_in_my_ads(driver, ad_title), "Созданное объявление не найдено в профиле"

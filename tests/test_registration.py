@@ -13,7 +13,7 @@ class TestRegistration:
 
         register_user(driver, email, password)
 
-        text = wait_visible(driver, MainPageLocators.PROFILE_OPEN).text
+        text = wait_visible(driver, MainPageLocators.USERNAME).text
         assert ('Пользователь' in text) or ('User' in text)
 
     def test_register_email_wrong_mask(self, driver):

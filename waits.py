@@ -14,3 +14,15 @@ def wait_clickable(driver, locator, timeout=TIMEOUT):
 
 def wait_invisible(driver, locator, timeout=TIMEOUT):
     return WebDriverWait(driver, timeout).until(EC.invisibility_of_element_located(locator))
+
+
+def wait_url_contains(driver, text, timeout=TIMEOUT):
+    return WebDriverWait(driver, timeout).until(EC.url_contains(text))
+
+
+def wait_url_is(driver, url, timeout=TIMEOUT):
+    return WebDriverWait(driver, timeout).until(EC.url_to_be(url))
+
+
+def wait_present(driver, locator, timeout=10):
+    return WebDriverWait(driver, timeout).until(EC.presence_of_element_located(locator))

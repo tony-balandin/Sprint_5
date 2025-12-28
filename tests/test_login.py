@@ -9,5 +9,6 @@ class TestLogin:
         open_main(driver)
         login(driver, EXISTING_USER_EMAIL, EXISTING_USER_PASSWORD)
 
-        text = wait_visible(driver, MainPageLocators.PROFILE_OPEN).text
+
+        text = wait_visible(driver, MainPageLocators.USERNAME).text
         assert ('Пользователь' in text) or ('User' in text)
