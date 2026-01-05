@@ -2,53 +2,63 @@ from selenium.webdriver.common.by import By
 
 
 class AuthPopupLocators:
-    LOGIN_TITLE = (
-        By.XPATH,
-        "//*[self::h1 or self::h2 or self::div][contains(normalize-space(.), 'Вход') or contains(normalize-space(.), 'Login')]",
-    )
+    """Локаторы попапа авторизации/регистрации."""
 
-    CLOSE_BTN = (
+    # Логин
+    LOGIN_EMAIL = (
         By.XPATH,
-        "//button[contains(@class, 'close') or @aria-label='Закрыть' or normalize-space(.)='×']",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[1]/div/div/input",
     )
-
-    LOGIN_EMAIL = (By.XPATH, "//input[@name='email' or @placeholder='Email']")
-    LOGIN_PASSWORD = (By.XPATH, "//input[@name='password' or @placeholder='Пароль']")
+    LOGIN_PASSWORD = (
+        By.XPATH,
+        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[2]/div/div/input",
+    )
     LOGIN_SUBMIT = (
         By.XPATH,
-        "//button[contains(normalize-space(.), 'Войти') or contains(normalize-space(.), 'Login')]",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[3]/button[1]",
     )
 
+    # Переход к регистрации
     NO_ACCOUNT = (
         By.XPATH,
-        "//*[self::button or self::a][contains(normalize-space(.), 'Нет аккаунта') or contains(normalize-space(.), 'Создать') or contains(normalize-space(.), 'Register')]",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[3]/button[2]",
     )
 
+    # Заголовок формы (и для регистрации, и для сценария "нужна авторизация")
     REG_TITLE = (
         By.XPATH,
-        "//*[self::h1 or self::h2 or self::div][contains(normalize-space(.), 'Регистрация') or contains(normalize-space(.), 'Создать аккаунт') or contains(normalize-space(.), 'Registration')]",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[1]/h1",
     )
 
-    REG_EMAIL = (By.XPATH, "//input[@name='email' or @placeholder='Email']")
-    REG_PASSWORD = (By.XPATH, "//input[@name='password' or @placeholder='Пароль']")
+    # Сценарий: пользователь не залогинен, нажал "Разместить объявление".
+    NEED_AUTH_TO_CREATE_AD_TITLE = (
+        By.XPATH,
+        "//*[@id='root']/div/div[2]/div[5]/form/div[1]/h1",
+    )
+
+    # Регистрация
+    REG_EMAIL = (
+        By.XPATH,
+        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[1]/div/div/input",
+    )
+    REG_PASSWORD = (
+        By.XPATH,
+        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[2]/div/div/input",
+    )
     REG_REPEAT_PASSWORD = (
         By.XPATH,
-        "//input[@name='repeatPassword' or @placeholder='Повторите пароль']",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[3]/div/div/input",
     )
-
     CREATE_ACCOUNT = (
         By.XPATH,
-        "//button[contains(normalize-space(.), 'Создать аккаунт') or contains(normalize-space(.), 'Create')]",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[3]/button[1]",
     )
 
-    ALREADY_HAVE_ACCOUNT = (
+    # Ошибка для email
+    EMAIL_ERROR = (
         By.XPATH,
-        "//*[self::button or self::a][contains(normalize-space(.), 'Уже есть аккаунт') or contains(normalize-space(.), 'Войти')]",
+        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[1]/span",
     )
 
-    ERROR_TEXT = (
-        By.XPATH,
-        "//*[normalize-space()='Ошибка']",
-    )
-
-    EMAIL_ERROR = ERROR_TEXT
+    # В тестах ошибку читаем одинаково
+    ERROR_TEXT = EMAIL_ERROR

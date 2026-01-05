@@ -1,6 +1,10 @@
 import uuid
 
-from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    StaleElementReferenceException,
+    TimeoutException,
+)
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -53,12 +57,39 @@ def login(driver, email: str, password: str):
 
 
 def open_create_ad(driver):
-    for _ in range(3):
-        try:
-            wait_clickable(driver, MainPageLocators.CREATE_AD_BTN).click()
-            return
-        except StaleElementReferenceException:
-            continue
+    """Открыть форму создания объявления.
+
+    После логина/закрытия попапа хедер может перерисовываться и даёт StaleElementReference.
+    Поэтому делаем несколько попыток клика и каждый раз заново находим элемент.
+    """
+    driver.execute_script("window.scrollTo(0, 0);")
+
+    candidates = [
+        # После логина
+        getattr(MainPageLocators, "CREATE_AD_BTN_AUTHED", None),
+        # До логина
+        getattr(MainPageLocators, "CREATE_AD_BTN", None),
+    ]
+    candidates = [c for c in candidates if c]
+
+    last_exc = None
+    for _ in range(6):
+        for locator in candidates:
+            try:
+                elem = WebDriverWait(driver, 5).until(EC.element_to_be_clickable(locator))
+                elem.click()
+                return
+            except (StaleElementReferenceException, ElementClickInterceptedException) as exc:
+                last_exc = exc
+                # Иногда помогает скролл наверх и повтор
+                driver.execute_script("window.scrollTo(0, 0);")
+                continue
+            except TimeoutException as exc:
+                last_exc = exc
+                continue
+
+    if last_exc:
+        raise last_exc
 
 
 def open_profile(driver):

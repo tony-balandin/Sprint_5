@@ -8,6 +8,7 @@ from helpers import (
     find_my_ad_in_my_ads,
 )
 from locators.ad_form import AdFormLocators
+from locators.auth_popup import AuthPopupLocators
 from locators.profile_page import ProfilePageLocators
 from waits import wait_visible, wait_clickable
 from data import EXISTING_USER_EMAIL, EXISTING_USER_PASSWORD
@@ -18,8 +19,8 @@ class TestAds:
         open_main(driver)
         open_create_ad(driver)
 
-        title = wait_visible(driver, AdFormLocators.NEED_AUTH_TITLE).text
-        assert "авторизуйтесь" in title.lower()
+        title = wait_visible(driver, AuthPopupLocators.NEED_AUTH_TO_CREATE_AD_TITLE).text
+        assert ("авториз" in title.lower()) or ("войти" in title.lower())
 
     def test_create_ad_authorized_visible_in_profile(self, driver):
         open_main(driver)

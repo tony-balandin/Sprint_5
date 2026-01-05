@@ -2,41 +2,22 @@ from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
+    """Локаторы главной страницы."""
 
-    AUTH_BTN = (
-        By.XPATH,
-        "//*[self::a or self::button]"
-        "[contains(normalize-space(.), 'Вход') or contains(normalize-space(.), 'Войти') "
-        "or contains(normalize-space(.), 'Регистра') or contains(normalize-space(.), 'Зарегистр') "
-        "or contains(normalize-space(.), 'Sign in') or contains(normalize-space(.), 'Log in') "
-        "or contains(normalize-space(.), 'Register')]"
-    )
+    # Кнопка "Вход и регистрация"
+    AUTH_BTN = (By.XPATH, "/html/body/div/div/div[1]/div/button[1]")
 
+    # Кнопка "Разместить объявление" (до авторизации)
+    CREATE_AD_BTN = (By.XPATH, "/html/body/div/div/div[1]/div/button[2]")
 
-    CREATE_AD_BTN = (
-        By.XPATH,
-        "//*[self::a or self::button]"
-        "[contains(normalize-space(.), 'Разместить') or contains(normalize-space(.), 'объяв') "
-        "or contains(normalize-space(.), 'Create') or contains(normalize-space(.), 'Post') "
-        "or contains(normalize-space(.), 'Publish')]"
-    )
+    # Кнопка "Разместить объявление" (после авторизации)
+    CREATE_AD_BTN_AUTHED = (By.XPATH, "//*[@id='root']/div/div[1]/div/button")
 
+    # Имя пользователя после успешного логина
+    USERNAME = (By.XPATH, "/html/body/div/div/div[1]/div/div[1]/div/h3")
 
-    PROFILE_OPEN = (
-        By.XPATH,
-        "(//h3[contains(normalize-space(.), 'User') or contains(normalize-space(.), 'Пользователь')]/ancestor::div[1]/preceding-sibling::button"
-        " | //h3[contains(normalize-space(.), 'User') or contains(normalize-space(.), 'Пользователь')]/ancestor::div[1]/following-sibling::button)[1]"
-    )
+    # Кнопка-иконка профиля
+    PROFILE_OPEN = (By.XPATH, "//*[@id='root']/div/div[1]/div/div[1]/button")
 
-
-    USERNAME = (
-        By.XPATH,
-        "//h3[contains(normalize-space(.), 'User') or contains(normalize-space(.), 'Пользователь')]"
-    )
-
-    LOGOUT_BTN = (
-        By.XPATH,
-        "//*[self::a or self::button]"
-        "[contains(normalize-space(.), 'Выйти') or contains(normalize-space(.), 'Logout') "
-        "or contains(normalize-space(.), 'Sign out')]"
-    )
+    # Кнопка "Выйти" (в раскрытом меню профиля)
+    LOGOUT_BTN = (By.XPATH, "//*[@id='root']/div/div[1]/div/div[1]/div/button")

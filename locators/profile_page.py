@@ -2,57 +2,32 @@ from selenium.webdriver.common.by import By
 
 
 class ProfilePageLocators:
+    """Локаторы страницы профиля."""
 
-    PROFILE_TITLE = (
-        By.XPATH,
+    # Маркер, что профиль открыт
+    PROFILE_TITLE = (By.XPATH, "//*[@id='root']/div/div[2]/form/div[1]/h1")
 
-        "//form//h1[contains(translate(normalize-space(.), "
-        "'ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ', "
-        "'abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя'), 'профиль') "
-        "or contains(translate(normalize-space(.), "
-        "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'profile')]"
-    )
-
-
-    MY_ADS_TITLE = (
-        By.XPATH,
-        "(//h1[contains(@class,'h1') and normalize-space()='Мои объявления'] | "
-        "//div[contains(@class,'profilePage_listningBlock')][.//div[contains(@class,'profilePage_gridAndPaginaton')]]//h1)[1]",
-    )
-
-
+    # Блок "Мои объявления"
+    MY_ADS_TITLE = (By.XPATH, "//*[@id='root']/div/div[2]/div[4]/h1")
     MY_ADS_GRID_AND_PAGINATION = (
-        By.CSS_SELECTOR,
-        "div[class*='profilePage_gridAndPaginaton']",
+        By.XPATH,
+        "//*[@id='root']/div/div[2]/div[4]/div/div[2]",
     )
 
+    # Карточки/заголовки объявлений в сетке
+    MY_AD_CARD = (By.XPATH, "//*[@id='root']/div/div[2]/div[4]/div/div[1]//h2")
 
-    MY_AD_CARD = (
-        By.CSS_SELECTOR,
-        "div[class*='profilePage_gridAndPaginaton'] div.card",
-    )
-
-
-    PAGINATION_SHELL = (
-        By.CSS_SELECTOR,
-        "div[class*='profilePage_gridAndPaginaton'] div[class*='pagination_shell']",
-    )
-    PAGINATION_STATUS = (
-        By.CSS_SELECTOR,
-        "div[class*='profilePage_gridAndPaginaton'] div[class*='pagination_shell'] p.spanGlobal",
-    )
-    PAGINATION_NEXT = (
-        By.CSS_SELECTOR,
-        "div[class*='profilePage_gridAndPaginaton'] div[class*='pagination_shell'] "
-        "button[class*='arrowButton--right']",
-    )
+    # Пагинация
+    PAGINATION_SHELL = (By.XPATH, "//*[@id='root']/div/div[2]/div[4]/div/div[2]")
+    PAGINATION_STATUS = (By.XPATH, "//*[@id='root']/div/div[2]/div[4]/div/div[2]/p")
+    PAGINATION_PREV = (By.XPATH, "//*[@id='root']/div/div[2]/div[4]/div/div[2]/button[1]")
+    PAGINATION_NEXT = (By.XPATH, "//*[@id='root']/div/div[2]/div[4]/div/div[2]/button[2]")
 
     @staticmethod
-    def my_ad_title(title: str):
-
-        safe_title = title.replace("'", "")
+    def my_ad_title(ad_title: str):
+        """Заголовок конкретного объявления в профиле (по тексту)."""
         return (
             By.XPATH,
-            "//div[contains(@class,'profilePage_gridAndPaginaton')]"
-            f"//div[contains(@class,'card')]//h2[contains(@class,'h2') and normalize-space(.)='{safe_title}']",
+            "//*[@id='root']/div/div[2]/div[4]/div/div[1]"
+            f"//h2[normalize-space()='{ad_title}']",
         )
