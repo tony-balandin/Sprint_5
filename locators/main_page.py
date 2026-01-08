@@ -2,22 +2,28 @@ from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
-    """Локаторы главной страницы."""
+    """Локаторы главной страницы (шапка)."""
 
     # Кнопка "Вход и регистрация"
-    AUTH_BTN = (By.XPATH, "/html/body/div/div/div[1]/div/button[1]")
+    AUTH_BTN = (
+        By.XPATH,
+        "//button[@type='button' and normalize-space()='Вход и регистрация']",
+    )
 
-    # Кнопка "Разместить объявление" (до авторизации)
-    CREATE_AD_BTN = (By.XPATH, "/html/body/div/div/div[1]/div/button[2]")
+    # Кнопка "Разместить объявление"
+    CREATE_AD_BTN = (
+        By.XPATH,
+        "//button[@type='button' and normalize-space()='Разместить объявление']",
+    )
 
-    # Кнопка "Разместить объявление" (после авторизации)
-    CREATE_AD_BTN_AUTHED = (By.XPATH, "//*[@id='root']/div/div[1]/div/button")
-
-    # Имя пользователя после успешного логина
-    USERNAME = (By.XPATH, "/html/body/div/div/div[1]/div/div[1]/div/h3")
+    # Текст пользователя после логина
+    USERNAME = (By.CSS_SELECTOR, "h3.profileText.name")
 
     # Кнопка-иконка профиля
-    PROFILE_OPEN = (By.XPATH, "//*[@id='root']/div/div[1]/div/div[1]/button")
+    PROFILE_OPEN = (By.CSS_SELECTOR, "button.circleSmall")
 
-    # Кнопка "Выйти" (в раскрытом меню профиля)
-    LOGOUT_BTN = (By.XPATH, "//*[@id='root']/div/div[1]/div/div[1]/div/button")
+    # Кнопка "Выйти"
+    LOGOUT_BTN = (
+        By.XPATH,
+        "//button[@type='button' and normalize-space()='Выйти']",
+    )

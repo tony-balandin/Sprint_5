@@ -14,5 +14,5 @@ class TestRegistrationExistingUser:
         wait_visible(driver, AuthPopupLocators.REG_REPEAT_PASSWORD).send_keys(EXISTING_USER_PASSWORD)
         wait_visible(driver, AuthPopupLocators.CREATE_ACCOUNT).click()
 
-        error = wait_visible(driver, AuthPopupLocators.EMAIL_ERROR).text
+        error = wait_visible(driver, AuthPopupLocators.ERROR_TEXT).text
         assert error == "Ошибка"

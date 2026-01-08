@@ -2,63 +2,87 @@ from selenium.webdriver.common.by import By
 
 
 class AuthPopupLocators:
-    """Локаторы попапа авторизации/регистрации."""
+    """Локаторы попапа авторизации/регистрации.
 
-    # Логин
+    В проекте попап один, меняется только содержимое (заголовок/кнопки).
+    Локаторы привязаны к атрибутам элементов (name/placeholder/class/text),
+    без абсолютных путей и без порядковых индексов.
+    """
+
+    FORM = (
+        By.XPATH,
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]",
+    )
+
+    TITLE = (
+        By.XPATH,
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]//h1",
+    )
+
+    NEED_AUTH_TO_CREATE_AD_TITLE = (
+        By.XPATH,
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//h1"
+        "[contains(translate(normalize-space(.), 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',"
+        " 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'), 'разместить')"
+        " and contains(translate(normalize-space(.), 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',"
+        " 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'), 'авториз')]")
+
     LOGIN_EMAIL = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[1]/div/div/input",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//input[@name='email' and @placeholder='Введите Email']",
     )
     LOGIN_PASSWORD = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[2]/div/div/input",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//input[@name='password' and @type='password' and @placeholder='Пароль']",
     )
     LOGIN_SUBMIT = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[3]/button[1]",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//button[@type='submit' and normalize-space()='Войти']",
     )
-
-    # Переход к регистрации
     NO_ACCOUNT = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[3]/button[2]",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//button[@type='button' and normalize-space()='Нет аккаунта']",
     )
 
-    # Заголовок формы (и для регистрации, и для сценария "нужна авторизация")
     REG_TITLE = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[1]/h1",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//h1[normalize-space()='Зарегистрироваться']",
     )
-
-    # Сценарий: пользователь не залогинен, нажал "Разместить объявление".
-    NEED_AUTH_TO_CREATE_AD_TITLE = (
-        By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[1]/h1",
-    )
-
-    # Регистрация
     REG_EMAIL = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[1]/div/div/input",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//input[@name='email' and @placeholder='Введите Email']",
     )
     REG_PASSWORD = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[2]/div/div/input",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//input[@name='password' and @type='password' and @placeholder='Пароль']",
     )
     REG_REPEAT_PASSWORD = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[3]/div/div/input",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//input[@name='submitPassword' and @type='password' and @placeholder='Повторите пароль']",
     )
     CREATE_ACCOUNT = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[3]/button[1]",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//button[@type='submit' and normalize-space()='Создать аккаунт']",
     )
-
-    # Ошибка для email
-    EMAIL_ERROR = (
+    HAVE_ACCOUNT = (
         By.XPATH,
-        "//*[@id='root']/div/div[2]/div[5]/form/div[2]/div[1]/span",
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//button[@type='button' and normalize-space()='Уже есть аккаунт']",
     )
 
-    # В тестах ошибку читаем одинаково
-    ERROR_TEXT = EMAIL_ERROR
+    ERROR_TEXT = (
+        By.XPATH,
+        "//form[.//input[@name='email' and @placeholder='Введите Email']]"
+        "//span[contains(@class,'input_span')]",
+    )
+
